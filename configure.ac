@@ -1586,7 +1586,6 @@ case $host in
   *-apple-*)
     AC_CONFIG_LINKS([$ext1/libASICamera2/libASICamera2.dylib:ext/libASICamera2/mac/libASICamera2.dylib])
     AC_CONFIG_LINKS([$ext2/libtoupcam/libtoupcam.dylib:ext/libtoupcam/mac/libtoupcam.dylib])
-    AC_CONFIG_LINKS([$ext3/libaltaircam/libaltaircam.dylib:ext/libaltaircam/mac64/libaltaircam.dylib])
     AC_CONFIG_LINKS([$ext4/libEFWFilter/libEFWFilter.a:ext/libEFWFilter/mac/libEFWFilter.a])
     AC_CONFIG_LINKS([$ext5/libaltaircamlegacy/libaltaircamlegacy.dylib:ext/libaltaircamlegacy/mac64/libaltaircamlegacy.dylib])
     AC_CONFIG_LINKS([$ext6/libqhyccd/libqhyccd.dylib:ext/libqhyccd/mac64/libqhyccd.dylib])
