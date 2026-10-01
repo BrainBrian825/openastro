@@ -6,6 +6,12 @@ autoreconf -fvi
 
 for extdir in ext/libdc1394 ext/libhidapi ext/libusb
 do
+  if [ "$extdir" = ext/libdc1394 ] &&
+     pkg-config --exists 'libusb-1.0 >= 1.0.21' 'libdc1394-2 >= 2.2.4'
+  then
+    echo "Using system libdc1394; skipping bundled bootstrap"
+    continue
+  fi
   echo
   echo "Processing $extdir..."
   cd $extdir
