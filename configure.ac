@@ -127,7 +127,7 @@ case $host in
     ;;
   *-apple-*)
     useisystemInclude=yes
-    build_libusb=yes
+    
 		have_svbcamerasdk=yes
     ;;
 esac
