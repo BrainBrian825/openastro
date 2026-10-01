@@ -12,6 +12,12 @@ do
     echo "Using system libdc1394; skipping bundled bootstrap"
     continue
   fi
+  if [ "$extdir" = ext/libusb ] &&
+     pkg-config --exists 'libusb-1.0 >= 1.0.21'
+  then
+    echo "Using system libusb; skipping bundled bootstrap"
+    continue
+  fi
   echo
   echo "Processing $extdir..."
   cd $extdir
