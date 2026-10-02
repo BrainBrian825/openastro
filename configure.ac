@@ -1365,7 +1365,7 @@ then
 	if test "$use_system_libusb" == "no"
 	then
 		AC_MSG_NOTICE([Using included libusb-1.0 code])
-		LIBUSB_CFLAGS="-I \$(top_srcdir)/ext/libusb"
+		LIBUSB_CFLAGS="-I \$(top_srcdir)/ext/libusb -I \$(top_srcdir)/ext/libusb/libusb"
 		LIBUSB_CFLAGS_SUBDIR="-I \$(top_srcdir)/ext/libusb/libusb"
 		LIBUSB_LDFLAGS=""
 		LIBUSB_LIBS="\$(top_builddir)/ext/libusb/libusb/libusb-1.0.la"
