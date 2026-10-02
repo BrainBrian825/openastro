@@ -27,9 +27,9 @@ SUBDIRS = oaCapture.iconset oalive.iconset
 
 BUILT_SOURCES = oacapture.plist oalive.plist
 
-%.plist: %.plist.in $(top_srcdir)/version
+%.plist: %.plist.in $(top_srcdir)/oa-version.txt
 	-rm -f -f $@.tmp
-	sed -e "s/@FULL_VERSION@/`cat $(top_srcdir)/version`/g" >$@.tmp $<
+	sed -e "s/@FULL_VERSION@/`cat $(top_srcdir)/oa-version.txt`/g" >$@.tmp $<
 	cmp -s $@.tmp $@ || ( rm -f $@ && mv $@.tmp $@ )
 
 install:

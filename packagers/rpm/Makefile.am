@@ -29,7 +29,7 @@ all: $(SPECFILES)
 
 %.spec: %.spec.in
 	rm -f $@
-	sed -e "s/@FULL_VERSION@/`cat $(top_srcdir)/version`/g" >$@ $<
+	sed -e "s/@FULL_VERSION@/`cat $(top_srcdir)/oa-version.txt`/g" >$@ $<
 	chmod +x $<
 
 install:

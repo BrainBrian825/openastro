@@ -27,9 +27,9 @@ HELPERS = build-oacapture-dmg.sh build-oalive-dmg.sh
 
 all: $(HELPERS)
 
-%.sh: %.sh.in $(top_srcdir)/version
+%.sh: %.sh.in $(top_srcdir)/oa-version.txt
 	-rm -f $@
-	sed -e "s/@FULL_VERSION@/`cat $(top_srcdir)/version`/g" >$@ $<
+	sed -e "s/@FULL_VERSION@/`cat $(top_srcdir)/oa-version.txt`/g" >$@ $<
 	chmod +x $@
 
 install:

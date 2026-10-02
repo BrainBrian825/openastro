@@ -76,11 +76,11 @@ qrc_%.cc: %.qrc
 mostlyclean-local:
 	-rm -rf moc_*.cc qrc_*.cc version.h
 
-version.h: version.h.in $(top_srcdir)/version
+version.h: version.h.in $(top_srcdir)/oa-version.txt
 	-rm -f $@.tmp
-	maj=`cat $(top_srcdir)/version | cut -d. -f1`; \
-	min=`cat $(top_srcdir)/version | cut -d. -f2`; \
-	rev=`cat $(top_srcdir)/version | cut -d. -f3`; \
+	maj=`cat $(top_srcdir)/oa-version.txt | cut -d. -f1`; \
+	min=`cat $(top_srcdir)/oa-version.txt | cut -d. -f2`; \
+	rev=`cat $(top_srcdir)/oa-version.txt | cut -d. -f3`; \
 	sed -e "s/##MAJOR_VERSION##/$$maj/g" -e "s/##MINOR_VERSION##/$$min/g" \
 		-e "s/##REVISION##/$$rev/g" >$@.tmp $<
 	cmp -s $@.tmp $@ || ( rm -f $@ && mv $@.tmp $@ )

@@ -28,7 +28,7 @@ all: $(LOGFILES)
 
 changelog: changelog.in
 	rm -f $@
-	sed -e "s/##FULL_VERSION##/`cat $(top_srcdir)/version`/g" -e "s/##DATE##/`date '+%a, %d %b %Y %X %z'`/" >$@ $<
+	sed -e "s/##FULL_VERSION##/`cat $(top_srcdir)/oa-version.txt`/g" -e "s/##DATE##/`date '+%a, %d %b %Y %X %z'`/" >$@ $<
 	chmod +x $<
 
 install:
