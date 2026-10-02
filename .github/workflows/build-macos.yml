@@ -45,6 +45,9 @@ jobs:
           cp oacapture/translations/*.qm "$app/Contents/Resources/translations/"
           plutil -lint "$app/Contents/Info.plist"
           "$(brew --prefix qt@5)/bin/macdeployqt" "$app" -verbose=2
+          xattr -cr "$app"
+          codesign --force --deep --sign - "$app"
+          codesign --verify --deep --strict "$app"
           otool -L "$app/Contents/MacOS/oaCapture"
           ditto -c -k --keepParent "$app" dist/oaCapture-macos27-arm64.zip
 
