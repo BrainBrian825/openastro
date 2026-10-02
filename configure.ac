@@ -486,6 +486,12 @@ then
 		if test "$useisystemInclude" == "yes"; then
       flags=`echo "$flags" | sed 's/^-I/-isystem/'`
     fi
+    # Some camera sources include <libusb-1.0/libusb.h>, while others
+    # include <libusb.h>.  Provide both the parent and header directory.
+    libusb_include_dir=`$PKG_CONFIG --variable=includedir libusb-1.0`
+    if test -n "$libusb_include_dir"; then
+      flags="$flags -I$libusb_include_dir"
+    fi
     LIBUSB_CFLAGS="$flags"
     LIBUSB_CFLAGS_SUBDIR="$flags"
     LIBUSB_LDFLAGS="`$PKG_CONFIG --libs-only-L libusb-1.0`"
