@@ -172,6 +172,7 @@ oaUVCInitCamera ( oaCameraDevice* device )
   uvc_device_t*                         uvcDevice;
   uvc_device_descriptor_t*              desc;
   uvc_device_handle_t*			uvcHandle;
+  uvc_error_t                            uvcError;
   const uvc_input_terminal_t*		inputTerminals;
   const uvc_input_terminal_t*		cameraTerminal;
   enum uvc_ct_ctrl_selector		control;
@@ -249,10 +250,12 @@ oaUVCInitCamera ( oaCameraDevice* device )
     if ( p_uvc_get_bus_number ( uvcDevice ) == deviceBus &&
         p_uvc_get_device_address ( uvcDevice ) == deviceAddr ) {
       // this looks like the one!
-      if ( p_uvc_open ( uvcDevice, &uvcHandle ) != UVC_SUCCESS ) {
+      if (( uvcError = p_uvc_open ( uvcDevice, &uvcHandle )) !=
+          UVC_SUCCESS ) {
         p_uvc_free_device_list ( devlist, 1 );
         p_uvc_exit ( cameraInfo->uvcContext );
-        oaLogError ( OA_LOG_CAMERA, "%s: open of UVC device failed", __func__ );
+        oaLogError ( OA_LOG_CAMERA, "%s: open of UVC device failed (%d)",
+            __func__, uvcError );
         FREE_DATA_STRUCTS;
         return 0;
       }
@@ -868,6 +871,7 @@ oaUVCInitCamera ( oaCameraDevice* device )
   do {
     switch ( format->bDescriptorSubtype ) {
 
+      case UVC_VS_FORMAT_UNCOMPRESSED:
       case UVC_VS_FORMAT_FRAME_BASED:
 
         if ( !memcmp ( format->fourccFormat, "BY8 ", 4 )) {
@@ -979,15 +983,6 @@ oaUVCInitCamera ( oaCameraDevice* device )
             cameraInfo->currentFrameFormat = OA_PIX_FMT_GREY16LE;
           }
         }
-        break;
-
-        if ( !cameraInfo->currentUVCFormatId ) {
-          oaLogError ( OA_LOG_CAMERA, "%s: unrecognised frame format '%4s'",
-							__func__, format->fourccFormat );
-        }
-
-      case UVC_VS_FORMAT_UNCOMPRESSED:
-
         if ( !memcmp ( format->fourccFormat, "YUY2", 4 )) {
           camera->frameFormats[ OA_PIX_FMT_YUYV ] = 1;
           cameraInfo->frameFormatMap[ OA_PIX_FMT_YUYV ] = format;
@@ -1020,7 +1015,7 @@ oaUVCInitCamera ( oaCameraDevice* device )
 
         if ( !cameraInfo->currentFrameFormat ) {
           oaLogError ( OA_LOG_CAMERA,
-							"%s: unrecognised uncompressed format '%4s'", __func__,
+						"%s: unrecognised video format '%4s'", __func__,
               format->fourccFormat );
         }
 
