@@ -652,7 +652,7 @@ if `$PKG_CONFIG --exists libftdi1`; then
   # because it will try to pull it in anyhow
   if test "x$use_system_libusb" == "xyes"; then
     LIBFTDI_LDFLAGS="`$PKG_CONFIG --libs-only-L libftdi1`"
-    LIBFTDI_LIBS="`$PKG_CONFIG --libs-only-l libftdi1`"
+    LIBFTDI_LIBS="`$PKG_CONFIG --libs libftdi1`"
   else
     AC_MSG_NOTICE([Using static libftdi1 to avoid system libusb])
     LIBFTDI_LDFLAGS=""
