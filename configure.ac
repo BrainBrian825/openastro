@@ -1825,7 +1825,7 @@ if test "x$use_system_libtscam" == "xno"
 then
 	if test "x$have_tscam" != "xno"
 	then
-		LIBTSCAM_CFLAGS="-I \$(top_srcdir)/ext/libtscam/include"
+		LIBTSCAM_CFLAGS="-I \$(top_srcdir)/ext/libtscam"
 		LIBTSCAM_LIBS=""
 		AC_DEFINE([HAVE_LIBTSCAM],[1],[Have Tscam library support])
 	fi
