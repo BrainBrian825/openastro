@@ -12,7 +12,7 @@ jobs:
     runs-on: xcode-27
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Install build dependencies
         run: |
@@ -34,3 +34,22 @@ jobs:
         run: |
           file oacapture/oacapture
           test "$(lipo -archs oacapture/oacapture)" = arm64
+
+      - name: Package oaCapture app
+        run: |
+          app="dist/oaCapture.app"
+          mkdir -p "$app/Contents/MacOS" "$app/Contents/Resources/translations"
+          cp oacapture/oacapture "$app/Contents/MacOS/oaCapture"
+          cp osx/oacapture.plist "$app/Contents/Info.plist"
+          cp osx/oaCapture.icns "$app/Contents/Resources/"
+          cp oacapture/translations/*.qm "$app/Contents/Resources/translations/"
+          plutil -lint "$app/Contents/Info.plist"
+          "$(brew --prefix qt@5)/bin/macdeployqt" "$app" -verbose=2
+          otool -L "$app/Contents/MacOS/oaCapture"
+          ditto -c -k --keepParent "$app" dist/oaCapture-macos27-arm64.zip
+
+      - uses: actions/upload-artifact@v6
+        with:
+          name: oaCapture-macos27-arm64
+          path: dist/oaCapture-macos27-arm64.zip
+          if-no-files-found: error

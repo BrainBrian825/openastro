@@ -17,7 +17,7 @@
 	<key>CFBundleExecutable</key>
 	<string>oaCapture</string>
 	<key>CFBundleShortVersionString</key>
-	<string>@FULL_VERSION@string>
+	<string>@FULL_VERSION@</string>
 	<key>CFBundleIconFile</key>
 	<string>oaCapture.icns</string>
 </dict>
