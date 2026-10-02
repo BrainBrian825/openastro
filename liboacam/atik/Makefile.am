@@ -25,6 +25,7 @@
 AM_CPPFLAGS = \
   -I$(top_srcdir)/include \
   -I$(top_srcdir)/ext/libusb \
+  $(LIBUSB_CFLAGS) \
   -I$(top_srcdir)/liboacam \
   $(DYNLIB_EXTN_CFLAGS)
 
