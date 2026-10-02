@@ -641,7 +641,13 @@ if `$PKG_CONFIG --exists libftdi1`; then
 		if test "$useisystemInclude" == "yes"; then
     flags=`echo "$flags" | sed 's/^-I/-isystem/'`
   fi
+  # Callers include both <ftdi.h> and <libftdi1/ftdi.h>.
+  libftdi_include_dir=`$PKG_CONFIG --variable=includedir libftdi1`
+  if test -n "$libftdi_include_dir"; then
+    flags="$flags -I$libftdi_include_dir"
+  fi
   LIBFTDI_CFLAGS="$flags"
+  CPPFLAGS="$LIBFTDI_CFLAGS $CPPFLAGS"
   # can't use shared libftdi1 if we're not using the system libusb
   # because it will try to pull it in anyhow
   if test "x$use_system_libusb" == "xyes"; then
