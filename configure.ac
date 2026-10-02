@@ -156,14 +156,14 @@ then
       AC_MSG_NOTICE([Qt5 appears to require compilation with -fPIC])
     fi
   fi
-  flags=`$PKG_CONFIG --cflags-only-I Qt5Core Qt5Gui Qt5Widgets`
+  flags="$QT5_CFLAGS"
   MOC_CFLAGS="$flags"
   if test "$useisystemInclude" == "yes"; then
     flags=`echo "$flags" | sed 's/-I/-isystem/g'`
   fi
   CPPFLAGS="$flags $CPPFLAGS"
   LDFLAGS="`$PKG_CONFIG --libs-only-L Qt5Core Qt5Gui Qt5Widgets` $LDFLAGS"
-  LIBS="`$PKG_CONFIG --libs-only-l Qt5Core Qt5Gui Qt5Widgets` $LIBS"
+  LIBS="$QT5_LIBS $LIBS"
   AC_DEFINE([HAVE_QT5],[1],[Have Qt5])
 else
   PKG_CHECK_MODULES(QT, [QtCore, QtGui, QtNetwork], [], [
@@ -1305,7 +1305,7 @@ if test "$use_system_ffmpeg" == "no"
 then
 
 # A whole pile of ugly stuff to make sure we get the FFmpeg we want
-FFMPEG_CFLAGS="-I \$(top_srcdir)/ext/ffmpeg"
+FFMPEG_CFLAGS="-idirafter \$(top_srcdir)/ext/ffmpeg"
 
 FFMPEG_LIBS="\$(top_builddir)/ext/ffmpeg/libavformat/libavformat.a \
                \$(top_builddir)/ext/ffmpeg/libavcodec/libavcodec.a \
