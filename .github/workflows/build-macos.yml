@@ -45,6 +45,7 @@ jobs:
           cp oacapture/translations/*.qm "$app/Contents/Resources/translations/"
           plutil -lint "$app/Contents/Info.plist"
           "$(brew --prefix qt@5)/bin/macdeployqt" "$app" -verbose=2
+          python3 osx/bundle-dependencies.py "$app"
           xattr -cr "$app"
           codesign --force --deep --sign - "$app"
           codesign --verify --deep --strict "$app"
