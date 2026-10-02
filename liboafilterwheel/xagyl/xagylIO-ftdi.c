@@ -29,7 +29,13 @@
 
 #include <errno.h>
 #include <pthread.h>
+#if HAVE_FTDI_H
+#include <ftdi.h>
+#elif HAVE_LIBFTDI1_FTDI_H
 #include <libftdi1/ftdi.h>
+#elif HAVE_LIBFTDI_FTDI_H
+#include <libftdi/ftdi.h>
+#endif
 
 #include <openastro/util.h>
 #include <openastro/filterwheel.h>
