@@ -127,6 +127,12 @@ case $host in
     ;;
   *-apple-*)
     useisystemInclude=yes
+    case $host in
+      arm64-apple-*|aarch64-apple-*)
+        # The bundled ZWO libraries for macOS contain Intel code only.
+        zwoSupportedArch=no
+        ;;
+    esac
     
 		have_svbcamerasdk=yes
     ;;
