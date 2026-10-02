@@ -985,7 +985,14 @@ uvc_error_t uvc_claim_if(uvc_device_handle_t *devh, int idx) {
    * it found a kernel driver for this interface. */
   ret = libusb_detach_kernel_driver(devh->usb_devh, idx);
 
-  if (ret == UVC_SUCCESS || ret == LIBUSB_ERROR_NOT_FOUND || ret == LIBUSB_ERROR_NOT_SUPPORTED) {
+  if (ret == UVC_SUCCESS || ret == LIBUSB_ERROR_NOT_FOUND ||
+      ret == LIBUSB_ERROR_NOT_SUPPORTED
+#ifdef __APPLE__
+      || ret == LIBUSB_ERROR_ACCESS
+#endif
+      ) {
+    /* On macOS, detaching the system UVC driver may be denied even when
+     * claiming the interface directly is allowed.  Let libusb decide. */
     UVC_DEBUG("claiming interface %d", idx);
     if (!( ret = libusb_claim_interface(devh->usb_devh, idx))) {
       devh->claimed |= ( 1 << idx );
@@ -1973,4 +1980,3 @@ void uvc_set_button_callback(uvc_device_handle_t *devh,
 const uvc_format_desc_t *uvc_get_format_descs(uvc_device_handle_t *devh) {
   return devh->info->stream_ifs->format_descs;
 }
-
